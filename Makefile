@@ -36,8 +36,8 @@ OBJS		= 	$(addprefix $(ODIR), $(OBJ))
 all			:	$(NAME)
 
 $(NAME)		:	$(OBJS)
-	#@make -C ./libft
-	#@make -C minilibx_macos
+	@make -C ./libft
+	@make -C minilibx_macos
 	$(CC) -o $(NAME) $(LINK) $(MLXFLAGS) $^ 
 
 $(ODIR)%.o : $(SRCDIR)%.c
