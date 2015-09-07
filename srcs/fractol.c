@@ -17,20 +17,34 @@ void	pxl_to_image(t_env *e, int x, int y, uint32_t color)
 	int pixel;
 
 	pixel = 1;
-	if (x > 0 && x < WINDOW_SIZE_X && y > 0 && y < WINDOW_SIZE_Y)
+	if (x > 0 && x < WINDOW_WIDE && y > 0 && y < WINDOW_HEIGHT)
 	{
 		pixel = (x * e->sl) + (y * (e->bpp / 8));
-		ft_memcpy(e->data + pixel, &color, e->bpp / 8);
+		ft_memcpy(e->data_one + pixel, &color, e->bpp / 8);
 	}
 }
 
 void	ft_reset(t_env *e)
 {
-	e->zoom = 10;
+	//e->zoom = 10;
 	e->a = 34;
 	e->b = 39.9;
 	e->color_set = 1;
 }
+
+void	init_window(t_env *e, char *name, int windows)
+{
+	if (!windows)
+		e->win_one = mlx_new_window(e->mlx, WINDOW_WIDE, WINDOW_HEIGHT, name);
+	else if (windows)
+	{
+		if (windows == 1)
+			e->win_one = mlx_new_window(e->mlx, WINDOW_WIDE, WINDOW_HEIGHT, name);
+		else if (windows == 2)
+			e->win_two = mlx_new_window(e->mlx, WINDOW_WIDE, WINDOW_HEIGHT, name);
+	}
+}
+
 
 void	ft_init(t_env *e)
 {
@@ -44,20 +58,42 @@ void	ft_init(t_env *e)
 int		main(int ac, char **av)
 {
 	t_env e;
-	
+
 	if (ac == 1)
 	{
 		ft_putstr("Error, select at least one map to display.\n");
 		return (1);
 	}
 	ft_init(&e);
-	if (ac < 4)
-	{
-		if (ft_strequ(av[1], "modulo"))
-	}
 	e.mlx = mlx_init();
-	e.win = mlx_new_window(e.mlx, WINDOW_SIZE_X, WINDOW_SIZE_Y, "42");
-	mlx_key_hook(e.win, key_hook, &e);
-	mlx_expose_hook(e.win, expose_hook, &e);
-	mlx_loop(e.mlx);	return (0);
+	if (ac == 2)
+	{
+		if (ft_strstr(av[1], MAPS))
+		{
+			init_window(&e, av[1], 0);
+			ft_loop_one();
+			return (0);
+		}
+		else
+			ft_putstr("Error, select a valid map.\n");
+	}
+	if (ac == 3)
+	{
+		if (ft_strstr(av[1], MAPS) && ft_strstr(av[2], MAPS))
+		{
+			e.frac_one = ft_strdup(av[1]);
+			e.frac_two = ft_strdup(av[2]);
+			init_window(&e, av[1], 1);
+			init_window(&e, av[1], 2);
+			ft_loop_two();
+			return (0);
+		}
+		else
+			ft_putstr("Error, select a valid map.\n");
+	}
+
+	mlx_key_hook(e.win_one, key_hook, &e);
+	mlx_expose_hook(e.win_one, expose_hook, &e);
+	mlx_loop(e.mlx);
+	return (0);
 }

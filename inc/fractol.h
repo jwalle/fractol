@@ -15,6 +15,7 @@
 
 # define WINDOW_WIDE 1000
 # define WINDOW_HEIGHT 1000
+# define MAPS "modulo | julia"
 
 # include "../minilibx_macos/mlx.h"
 # include "../libft/libft.h"
@@ -24,9 +25,17 @@
 
 typedef struct	s_env
 {
+	int			windows;
 	int			color_set;
 	void		*mlx;
-	void		*win;
+	void		*win_one;
+	void		*win_two;
+	char		*frac_one;
+	char		*frac_two;
+	void		*img_one;
+	void		*img_two;
+	void		*data_one;
+	void		*data_two;
 	void		*img;
 	int			bpp;
 	int			sl;
@@ -39,5 +48,9 @@ typedef struct	s_env
 	double		last_time;
 }				t_env;
 
+int		expose_hook(t_env *e);
+int		key_hook(int keycode, t_env *e);
+void	ft_loop_two();
+void	ft_loop_one();
 
 #endif
