@@ -18,9 +18,9 @@ int		key_hook(int keycode, t_env *e)
 		e->rgt += 0.05;
 	if (keycode == 125)
 		e->rgt -= 0.05;
-	if (keycode == 6)
-		e->dwn += 0.05;
-	if (keycode == 7)
+	if (keycode == 123)
+		e->dwn += 1;
+	if (keycode == 124)
 		e->dwn -= 1;
 	if (keycode == 69)
 		e->zoom *= 1.1;
