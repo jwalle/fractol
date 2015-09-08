@@ -30,9 +30,8 @@ int		key_hook(int keycode, t_env *e)
 int		expose_hook(t_env *e)
 {
 	e->img_one = mlx_new_image(e->mlx, WINDOW_WIDE, WINDOW_HEIGHT);
-	e->data_one = mlx_get_data_addr(e->img, &e->bpp, &e->sl, &e->endian);
-	//draw(e);
+	e->data_one = mlx_get_data_addr(e->img_one, &e->bpp, &e->sl, &e->endian);
+	draw_mandelbrot(e);
 	//ft_print_screen(e);
 	return (0);
 }
-

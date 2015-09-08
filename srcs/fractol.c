@@ -12,6 +12,12 @@
 
 #include "fractol.h"
 
+void	print_error(char *str)
+{
+	ft_putendl_fd(str, 2);
+	exit(1);
+}
+
 void	pxl_to_image(t_env *e, int x, int y, uint32_t color)
 {
 	int pixel;
@@ -35,7 +41,11 @@ void	ft_reset(t_env *e)
 void	init_window(t_env *e, char *name, int windows)
 {
 	if (!windows)
+	{
 		e->win_one = mlx_new_window(e->mlx, WINDOW_WIDE, WINDOW_HEIGHT, name);
+		printf("ONE WIN\n");
+		return ;
+	}
 	else if (windows)
 	{
 		if (windows == 1)
@@ -52,48 +62,47 @@ void	ft_init(t_env *e)
 
 	gettimeofday(&time, NULL);
 	e->last_time = time.tv_sec + time.tv_usec * 1e-6;
-	ft_reset(e);
+	e->img_one = NULL;
+	//ft_reset(e);
 }
 
 int		main(int ac, char **av)
 {
-	t_env e;
+	t_env *e;
 
+	e = malloc(sizeof(t_env));
 	if (ac == 1)
 	{
-		ft_putstr("Error, select at least one map to display.\n");
+		print_error("Error, select at least one map to display.");
 		return (1);
 	}
-	ft_init(&e);
-	e.mlx = mlx_init();
+	ft_init(e);
+	e->mlx = mlx_init();
 	if (ac == 2)
 	{
-		if (ft_strstr(av[1], MAPS))
+		if (ft_strstr(av[1], "julia"))
 		{
-			init_window(&e, av[1], 0);
-			ft_loop_one();
+			printf("PLOP\n");
+			init_window(e, av[1], 0);
+			ft_loop_one(e);
 			return (0);
 		}
 		else
-			ft_putstr("Error, select a valid map.\n");
+			print_error("Error, select a valid map.");
 	}
 	if (ac == 3)
 	{
 		if (ft_strstr(av[1], MAPS) && ft_strstr(av[2], MAPS))
 		{
-			e.frac_one = ft_strdup(av[1]);
-			e.frac_two = ft_strdup(av[2]);
-			init_window(&e, av[1], 1);
-			init_window(&e, av[1], 2);
-			ft_loop_two();
+			e->frac_one = ft_strdup(av[1]);
+			e->frac_two = ft_strdup(av[2]);
+			init_window(e, av[1], 1);
+			init_window(e, av[1], 2);
+			ft_loop_two(e);
 			return (0);
 		}
 		else
-			ft_putstr("Error, select a valid map.\n");
+			print_error("Error, select a valid map.");
 	}
-
-	mlx_key_hook(e.win_one, key_hook, &e);
-	mlx_expose_hook(e.win_one, expose_hook, &e);
-	mlx_loop(e.mlx);
 	return (0);
 }

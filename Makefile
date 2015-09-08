@@ -15,6 +15,7 @@ NAME 		= fractol
 SRC 		=	fractol.c \
 				hook.c \
 				loop.c \
+				mandelbrot.c \
 
 INC			=	-I./inc -I./libft/includes
 LINK		=	-Llibft -lft $(LDFLAGS) $(MLXFLAGS)

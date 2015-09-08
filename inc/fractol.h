@@ -13,8 +13,8 @@
 #ifndef FRACTOL_H
 #define FRACTOL_H
 
-# define WINDOW_WIDE 1000
-# define WINDOW_HEIGHT 1000
+# define WINDOW_WIDE 800
+# define WINDOW_HEIGHT 800
 # define MAPS "modulo | julia"
 
 # include "../minilibx_macos/mlx.h"
@@ -34,8 +34,8 @@ typedef struct	s_env
 	char		*frac_two;
 	void		*img_one;
 	void		*img_two;
-	void		*data_one;
-	void		*data_two;
+	char		*data_one;
+	char		*data_two;
 	void		*img;
 	int			bpp;
 	int			sl;
@@ -48,9 +48,17 @@ typedef struct	s_env
 	double		last_time;
 }				t_env;
 
+typedef struct	s_brot
+{
+	int			plop;
+}				t_brot;
+
+
 int		expose_hook(t_env *e);
 int		key_hook(int keycode, t_env *e);
-void	ft_loop_two();
-void	ft_loop_one();
+void	ft_loop_two(t_env *e);
+void	ft_loop_one(t_env *e);
+void	draw_mandelbrot(t_env *e);
+void	pxl_to_image(t_env *e, int x, int y, uint32_t color);
 
 #endif
