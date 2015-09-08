@@ -1,48 +1,62 @@
 #include "fractol.h"
 
-int		frac_mandel(int x, int y, t_env *e)
+int		frac_mandel(t_brot *in)
 {
-	int a;
-	int b;
+	t_brot	old;
+	t_brot	new;
+
 	int i;
-	int j;
 
-	a = x;
-	b = y;
-	i = 4;
-	j = 6;
-	(void)e;
+	new.a = 0;
+	new.b = 0;
+	i = 0;
+	while (i < 150)
+	{
+		old.a = new.a;
+		old.b = new.b;
+		new.a = old.a * old.a - old.b * old.b + in->a;
+		new.b = 2 * old.a + old.b + in->b;
+		if ((new.a * new.a + new.b * new.b) > 4)
+			break ;
+		i++;
+	}
+	if (i == 150)
+		return (0);
+	return (i);
+}
 
-		while (i < 150)
-		{
-			x = a * a - b * b + i;
-			y = 2 * a + b + j;
-			if ((x * x + y * y) > 4)
-				return(i);
-		}
-		return (i);
+int		ft_color(int i)
+{
+	int r;
+	int g;
+	int b;
+	int col;
+
+	r = i * 15 / 150;
+	g = i * 255 / 150;
+	b = i * 15 / 150;
+	col = ((b & 0xff) << 16) + ((g & 0xff) << 8) + r;
+	return (col);
 }
 
 void	draw_case_one(t_env *e)
 {
-	int			x;
-	int			y;
-	int			color;
-	int			color2;
+	int 		x;
+	int 		y;
+	t_brot		in;
 
-	// x = ori->x;
-	color = 0xFFFF00;
-	x = 0;
-	while (x <= WINDOW_HEIGHT)
+	y = 0;
+	while (y <= WINDOW_HEIGHT)
 	{
-		y = 0;
-		while (y <= WINDOW_WIDE)
+		x = 0;
+		while (x <= WINDOW_WIDE)
 		{
-			color2 = frac_mandel(x, y, e);
-			pxl_to_image(e, x, y, color2);
-			y++;
+			in.a = (x + e->up) / e->zoom / WINDOW_WIDE * 4 - 2;
+			in.b = (y + e->dwn) / e->zoom / WINDOW_HEIGHT * 4 - 2;
+			pxl_to_image(e, x, y, ft_color(frac_mandel(&in)));
+			x++;
 		}
-		x++;
+		y++;
 	}
 }
 

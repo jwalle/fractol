@@ -3,6 +3,7 @@
 
 int		key_hook(int keycode, t_env *e)
 {
+	printf("keycode = %i", keycode);
 	if (keycode == 53)
 	{
 		//free_tab_int(e->tab);
@@ -13,14 +14,18 @@ int		key_hook(int keycode, t_env *e)
 	}
 	//ft_key1(keycode, e);
 	//ft_key2(keycode, e);
-	if (keycode == 47)
-		e->z += 1;
-	if (keycode == 43)
-		e->z -= 1;
+	if (keycode == 126)
+		e->rgt += 0.05;
+	if (keycode == 125)
+		e->rgt -= 0.05;
 	if (keycode == 6)
-		e->z += 0.1;
+		e->dwn += 0.05;
 	if (keycode == 7)
-		e->z -= 0.1;
+		e->dwn -= 1;
+	if (keycode == 69)
+		e->zoom *= 1.1;
+	if (keycode == 78)
+		e->zoom /= 1.1;
 	mlx_clear_window(e->mlx, e->win_one);
 	mlx_destroy_image(e->mlx, e->img_one);
 	expose_hook(e);

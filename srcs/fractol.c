@@ -33,8 +33,6 @@ void	pxl_to_image(t_env *e, int x, int y, uint32_t color)
 void	ft_reset(t_env *e)
 {
 	//e->zoom = 10;
-	e->a = 34;
-	e->b = 39.9;
 	e->color_set = 1;
 }
 
@@ -63,6 +61,10 @@ void	ft_init(t_env *e)
 	gettimeofday(&time, NULL);
 	e->last_time = time.tv_sec + time.tv_usec * 1e-6;
 	e->img_one = NULL;
+	e->lft = 1;
+	e->rgt = 1;
+	e->up = 1;
+	e->dwn = 1;
 	//ft_reset(e);
 }
 

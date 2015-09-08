@@ -40,10 +40,11 @@ typedef struct	s_env
 	int			bpp;
 	int			sl;
 	int			endian;
-	double		w;
-	double		z;
-	double		g;
-	double		a;
+	double		zoom;
+	double		lft;
+	double		rgt;
+	double		up;
+	double		dwn;
 	double		b;
 	double		last_time;
 }				t_env;
@@ -51,6 +52,8 @@ typedef struct	s_env
 typedef struct	s_brot
 {
 	int			plop;
+	double		a;
+	double		b;
 }				t_brot;
 
 
