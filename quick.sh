@@ -1,4 +1,1 @@
-if ($0)
-	then
-	git add -A ; git commit -m $0 ; git push origin master
-fi
+git add -A ; git commit -m $1 ; git push origin master
