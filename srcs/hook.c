@@ -15,13 +15,13 @@ int		key_hook(int keycode, t_env *e)
 	//ft_key1(keycode, e);
 	//ft_key2(keycode, e);
 	if (keycode == 126)
-		e->rgt += 5;
+		e->rgt += 100;
 	if (keycode == 125)
-		e->rgt -= 5;
+		e->rgt -= 100;
 	if (keycode == 123)
-		e->dwn += 10;
+		e->dwn += 100;
 	if (keycode == 124)
-		e->dwn -= 10;
+		e->dwn -= 100;
 	if (keycode == 69)
 		e->zoom *= 1.1;
 	if (keycode == 78)
@@ -34,29 +34,35 @@ int		key_hook(int keycode, t_env *e)
 
 int		move_hook(int x, int y, t_env *e)
 {
-	printf("x = %i, y = %i iter = %i\n", x, y, e->iter);
+	printf("x = %i, y = %i iter = %i\n", x, y, e->iter); 
+	e->iter = x;
+	mlx_clear_window(e->mlx, e->win_one);
+	mlx_destroy_image(e->mlx, e->img_one);
+	expose_hook(e);
 	return (0);
 }
 
-int		mouse_hook(int button, t_env *e)
+int		mouse_hook(int button, int x, int y, t_env *e)
 {
+	(void)x;
+	(void)y;
 	printf("button = %i", button);
 	if (button == 1) // left click
 		e->rgt += 5;
 	if (button == 2) // right click
 		e->rgt -= 5;
 	if (button == 4) // molette up
-		e->zoom += 10;
-	if (button == 4) // molette down
-		e->zoom -= 10;
+		e->zoom *= 1.1;
+	if (button == 5) // molette down
+		e->zoom /= 1.1;
 	if (button == 69)
 		e->zoom *= 1.1;
 	if (button == 78)
 		e->zoom /= 1.1;
-	//mlx_clear_window(e->mlx, e->win_one);
-	//mlx_destroy_image(e->mlx, e->img_one);
-	//expose_hook(e);
-	return (1);
+	mlx_clear_window(e->mlx, e->win_one);
+	mlx_destroy_image(e->mlx, e->img_one);
+	expose_hook(e);
+	return (0);
 }
 
 
