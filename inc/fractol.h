@@ -60,9 +60,10 @@ typedef struct	s_brot
 
 int		expose_hook(t_env *e);
 int		key_hook(int keycode, t_env *e);
+int		mouse_hook(int button, t_env *e);
 void	ft_loop_two(t_env *e);
 void	ft_loop_one(t_env *e);
 void	draw_mandelbrot(t_env *e);
 void	pxl_to_image(t_env *e, int x, int y, uint32_t color);
-
+int		move_hook(int x, int y, t_env *e);
 #endif
