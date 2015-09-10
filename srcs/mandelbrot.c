@@ -63,9 +63,9 @@ void	draw_case_one(t_env *e)
 	t_brot		in;
 
 	y = 0;
+	x = 0;
 	while (y <= WINDOW_HEIGHT)
 	{
-		x = 0;
 		while (x <= WINDOW_WIDE)
 		{
 			in.a = (x + e->up) / e->zoom / WINDOW_WIDE * 4 - 2;
@@ -73,6 +73,7 @@ void	draw_case_one(t_env *e)
 			pxl_to_image(e, x, y, ft_color(frac_mandel(&in, e), e));
 			x++;
 		}
+		x = 0;
 		y++;
 	}
 }
