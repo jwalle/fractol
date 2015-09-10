@@ -47,6 +47,7 @@ typedef struct	s_env
 	double		dwn;
 	double		b;
 	double		last_time;
+	int			iter;
 }				t_env;
 
 typedef struct	s_brot

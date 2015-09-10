@@ -1,16 +1,18 @@
 #include "fractol.h"
 
-int		frac_mandel(t_brot *in)
+int		frac_mandel(t_brot *in, t_env *e)
 {
 	t_brot	old;
 	t_brot	new;
 
 	int i;
 
+	old.a = 0;
+	old.b = 0;
 	new.a = 0;
 	new.b = 0;
 	i = 0;
-	while (i < 150)
+	while (i < e->iter)
 	{
 		old.a = new.a;
 		old.b = new.b;
@@ -20,22 +22,37 @@ int		frac_mandel(t_brot *in)
 			break ;
 		i++;
 	}
-	if (i == 150)
+	if (i == e->iter)
 		return (0);
 	return (i);
 }
 
-int		ft_color(int i)
+int		ft_color(int i, t_env *e)
 {
-	int r;
-	int g;
-	int b;
+	int rgb[3];
 	int col;
 
-	r = i * 15 / 150;
-	g = i * 255 / 150;
-	b = i * 15 / 150;
-	col = ((b & 0xff) << 16) + ((g & 0xff) << 8) + r;
+	if (i < 100)
+	{
+		rgb[0] = i * 15 / e->iter;
+		rgb[1] = i * 255 / e->iter;
+		rgb[2] = i * 15 / e->iter;
+		col = ((rgb[2] & 0xff) << 16) + ((rgb[1] & 0xff) << 8) + rgb[0];
+	}
+	else if (i < 255)
+	{
+		rgb[0] = i * 1 / e->iter;
+		rgb[1] = i * 10 / e->iter;
+		rgb[2] = i * 255 / e->iter;
+		col = ((rgb[2] & 0xff) << 16) + ((rgb[1] & 0xff) << 8) + rgb[0];
+	}
+	else
+	{
+		rgb[0] = i * 10 / e->iter;
+		rgb[1] = i * 100 / e->iter;
+		rgb[2] = i * 255 / e->iter;
+		col = ((rgb[2] & 0xff) << 16) + ((rgb[1] & 0xff) << 8) + rgb[0];
+	}
 	return (col);
 }
 
@@ -53,7 +70,7 @@ void	draw_case_one(t_env *e)
 		{
 			in.a = (x + e->up) / e->zoom / WINDOW_WIDE * 4 - 2;
 			in.b = (y + e->dwn) / e->zoom / WINDOW_HEIGHT * 4 - 2;
-			pxl_to_image(e, x, y, ft_color(frac_mandel(&in)));
+			pxl_to_image(e, x, y, ft_color(frac_mandel(&in, e), e));
 			x++;
 		}
 		y++;

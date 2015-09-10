@@ -66,6 +66,7 @@ void	ft_init(t_env *e)
 	e->up = 1;
 	e->dwn = 1;
 	e->zoom = 1.2;
+	e->iter = 150;
 	//ft_reset(e);
 }
 
