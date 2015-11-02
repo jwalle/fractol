@@ -28,7 +28,7 @@ LDFLAGS		=	-L/usr/X11/lib
 MLXFLAGS	=	-L$(INC_MLX) -lmlx -framework OpenGL -framework AppKit	
 FLAGS		=	$(CFLAGS)
 
-CC			=	/usr/bin/gcc
+CC			=	clang
 RM			=	/bin/rm -f
 
 OBJ			=	$(SRC:.c=.o)

@@ -21,6 +21,7 @@
 # include "../libft/libft.h"
 # include <math.h>
 # include <sys/time.h>
+#include <stdint.h> // INT32
 #include <stdio.h> // PRINTF
 
 typedef struct	s_env
